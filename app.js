@@ -90,7 +90,7 @@ async function loadHome(){
 }
 async function loadEvents(){
   const [site, eventsData] = await Promise.all([getJSON('/content/site.json'), getJSON('/content/events.json')]);
-  renderFixedStatus(site); $('pageLogo').src = img(site.logo);
+  renderFixedStatus(site); if ($('pageLogo')) $('pageLogo').src = img(site.logo);
 
   const params = new URLSearchParams(location.search);
   let selected = params.get('category') || 'All';
@@ -131,12 +131,12 @@ async function loadEvents(){
 }
 async function loadGallery(){
   const [site, galleryData] = await Promise.all([getJSON('/content/site.json'), getJSON('/content/gallery.json')]);
-  renderFixedStatus(site); $('pageLogo').src = img(site.logo);
+  renderFixedStatus(site); if ($('pageLogo')) $('pageLogo').src = img(site.logo);
   $('galleryGrid').innerHTML = galleryData.gallery.map(g => `<img src="${esc(img(g.image))}" alt="${esc(g.title || 'Gallery photo')}">`).join('');
 }
 async function loadClubhouse(){
   const [site, club] = await Promise.all([getJSON('/content/site.json'), getJSON('/content/clubhouse.json')]);
-  renderFixedStatus(site); $('pageLogo').src = img(site.logo);
+  renderFixedStatus(site); if ($('pageLogo')) $('pageLogo').src = img(site.logo);
   $('menuButton').href = club.menuUrl;
   $('clubIntro').textContent = club.intro;
   $('clubTagline').textContent = club.tagline;
@@ -144,13 +144,13 @@ async function loadClubhouse(){
 }
 async function loadRentals(){
   const [site, rentals] = await Promise.all([getJSON('/content/site.json'), getJSON('/content/rentals.json')]);
-  renderFixedStatus(site); $('pageLogo').src = img(site.logo);
-  $('ratesList').innerHTML = rentals.rates.map(r => `<li>${esc(r)}</li>`).join('');
+  renderFixedStatus(site); if ($('pageLogo')) $('pageLogo').src = img(site.logo);
+  if ($('ratesList')) $('ratesList').innerHTML = rentals.rates.map(r => `<li>${esc(r)}</li>`).join('');
   $('typeDescriptions').innerHTML = (rentals.requestTypes || []).map(t => `<div class="type-help-item"><b>${esc(t.name)}</b><br>${esc(t.description)}</div>`).join('');
 }
 async function loadSafety(){
   const [site, safety] = await Promise.all([getJSON('/content/site.json'), getJSON('/content/safety.json')]);
-  renderFixedStatus(site); $('pageLogo').src = img(site.logo);
+  renderFixedStatus(site); if ($('pageLogo')) $('pageLogo').src = img(site.logo);
   $('waiverButton').href = safety.waiverUrl;
   $('safetyList').innerHTML = safety.safety.map(x=>`<p>${esc(x)}</p>`).join('');
   $('rulesIntro').innerHTML = (safety.rulesIntro || []).map(x=>`<p>${esc(x)}</p>`).join('');
@@ -164,7 +164,7 @@ async function loadSafety(){
 }
 async function loadContact(){
   const site = await getJSON('/content/site.json');
-  renderFixedStatus(site); $('pageLogo').src = img(site.logo);
+  renderFixedStatus(site); if ($('pageLogo')) $('pageLogo').src = img(site.logo);
   $('contactAddress').innerHTML = `<b>${esc(site.name)}</b><br>${esc(site.shortAddress)}<br>${esc(site.cityStateZip)}`;
   $('contactPhone').textContent = site.phone;
   $('contactPhone').href = 'tel:' + site.phone.replace(/\D/g,'');
