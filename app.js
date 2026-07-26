@@ -52,7 +52,7 @@ async function loadHome(){
   $('aboutTitle').textContent = site.legalName;
   $('aboutText').textContent = site.about;
   $('facebookLink').href = site.facebook;
-  $('videoLink').href = site.videoStreamsUrl || '#';
+  $('videoLink').href = site.videoStreamsUrl || 'https://watch.livebarn.com/en/register';
   $('waiverQuick').href = site.waiverUrl;
   $('menuQuick').href = site.menuUrl;
   $('rentalQuick').href = '/private-rentals.html';
