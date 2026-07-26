@@ -176,17 +176,20 @@ async function loadContact(){
 window.addEventListener('error', staticHomeFallback);
 setTimeout(staticHomeFallback, 1200);
 
-/* Professional visual refresh helpers. No content, event, link, or photo data is changed. */
+/* 2026 visual polish: no content or data changes */
 (function(){
-  const nav = document.querySelector('.top-nav');
-  const updateNav = () => nav && nav.classList.toggle('nav-scrolled', window.scrollY > 24);
-  window.addEventListener('scroll', updateNav, {passive:true});
+  const nav=document.querySelector('.top-nav');
+  const updateNav=()=>nav&&nav.classList.toggle('nav-scrolled',window.scrollY>24);
+  window.addEventListener('scroll',updateNav,{passive:true});
   updateNav();
-  document.addEventListener('DOMContentLoaded', () => document.body.classList.add('is-ready'));
-  if (document.readyState !== 'loading') document.body.classList.add('is-ready');
 
-  document.addEventListener('click', (event) => {
-    const menu = document.querySelector('.mobile-menu');
-    if (menu?.open && !menu.contains(event.target)) menu.removeAttribute('open');
-  });
+  const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce&&'IntersectionObserver' in window){
+    const targets=document.querySelectorAll('.section-head,.about-card,.info-mini-card,.visit-item,.why-card,.category-card,.feature-card,.location-grid,.resource-grid a,.card,.rate-card');
+    targets.forEach((el,i)=>{el.classList.add('ase-reveal');el.style.transitionDelay=((i%5)*45)+'ms';});
+    const io=new IntersectionObserver(entries=>entries.forEach(entry=>{
+      if(entry.isIntersecting){entry.target.classList.add('ase-visible');io.unobserve(entry.target);}
+    }),{threshold:.08,rootMargin:'0px 0px -30px 0px'});
+    targets.forEach(el=>io.observe(el));
+  }
 })();
