@@ -1,0 +1,42 @@
+backend:
+  name: git-gateway
+  branch: main
+media_folder: "uploads"
+public_folder: "/uploads"
+collections:
+  - name: "site_settings"
+    label: "Website Settings"
+    files:
+      - name: "general"
+        label: "Homepage & Field Status"
+        file: "data/settings.json"
+        format: "json"
+        fields:
+          - { label: "Site Name", name: "siteName", widget: "string" }
+          - { label: "Main Tagline", name: "tagline", widget: "string" }
+          - { label: "Field Status", name: "fieldStatus", widget: "select", options: ["OPEN", "CLOSED", "DELAYED", "CHECK SCHEDULE"] }
+          - { label: "Field Status Detail", name: "fieldStatusDetail", widget: "string" }
+          - { label: "Show Live at Adventure", name: "showLiveAtAdventure", widget: "boolean", default: false }
+          - { label: "Live Section Title", name: "liveTitle", widget: "string", required: false }
+          - { label: "Live Section Description", name: "liveDescription", widget: "text", required: false }
+  - name: "events"
+    label: "Events"
+    files:
+      - name: "all_events"
+        label: "All Events"
+        file: "data/events.json"
+        format: "json"
+        fields:
+          - label: "Events"
+            name: "events"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Category", name: "category", widget: "select", options: ["Baseball", "Softball", "Flag Football", "Camp", "Tournament"] }
+              - { label: "Display Date", name: "date", widget: "string" }
+              - { label: "Start Date", name: "startDate", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - { label: "End Date", name: "endDate", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Registration Link", name: "register", widget: "string" }
+              - { label: "Event Image", name: "image", widget: "image" }
